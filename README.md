@@ -1,4 +1,7 @@
-dotfiles
-========
+#dotfiles
 
-My dotfiles just for remember me and share
+Some of my configuration files. 
+
+## links
+
+* [slj'dotfiles](https://bitbucket.org/sjl/dotfiles)
