@@ -1,6 +1,6 @@
 " .vimrc
 "
-" Copyright (c) 2006 by PiT (Pierre BETTENS) <pbettens@heb.be>
+" Copyright (CC-BY) 2006 by PiT (Pierre BETTENS) <pbettens@heb.be>
 "
 " You can use this configuration file at your convenience.
 " I think it's beter if you understand each couple attribute/value but ...
@@ -9,17 +9,30 @@
 " better. 
 " 
 " I use this configuration file but I give NOT any warranty that this file 
-" will work fine for you. If you don't like my abbréviation, just change it. 
+" will work fine for you. If you don't like my abbreviation, just change it. 
 " If part of this file is not usefull for you I don't care, cut it. 
 " 
-" Install: copy this file in ~/.vimrc (you probably rename it)
+" Install: 	copy this file in ~/.vimrc (you probably rename it)
+" 			add your own abbreviations in ~/.vim/abbreviations.vim
 "
 " since: 			january 1995
 " last revision: 	10 october 2012 (Add solarized colorscheme)
+"					28 february 2014 (I begin reading Steve Losh post)
+"					15 march 2014 (After read Steve Losh post)
+"
+"
 
+
+" Use of pathogen a super plugin for charging all others
+filetype off
+call pathogen#helptags()
+call pathogen#runtime_append_all_bundles()
+filetype plugin indent on
+
+
+" 
 "
-" Set of setting
-"
+" Basic options 
 " I say vim is not vi
 set nocompatible
 " Scrolling 
@@ -28,13 +41,19 @@ set scrolloff=5
 " For a good indentation
 set autoindent
 set smartindent
+set copyindent 
 " I want to see parenthesis balance
 set showmatch 
-" I cut line to 80 char thus I have never long line. 
-" Java recommand tab to be 8 and shift 4
+" I cut line to 80 char thus I have never long line and I mark the 82 column
 set tabstop=4
 set shiftwidth=4
+set shiftround " use multiple of shiftwidth when indenting with '<' and '>'
+" When lines are too long, wrap it for no horizontal scrolling. Don't cut line
+" automatically execpt with `gq`
+set wrap 
 set textwidth=80
+set colorcolumn=82
+set formatoptions=qrn1j
 " Set visual bell, ie turn off the beep sounds and replace it by flash screen
 set vb
 " Hide the mouse pointer while typing
@@ -42,12 +61,21 @@ set mousehide
 " Increase  searching. When I search pattern with /foo, vim go to the fisrt f
 " after I type f, then fisrt fo when I type fo ... 
 set incsearch
+"set hlsearch 
+set ignorecase 	" ignore case when searching
+set smartcase   " ignore case if search pattern is all lowercase,
+                "    case-sensitive otherwise
+" By default replace all occurrence on a line 
+set gdefault
 " By default search if vim know the file's syntax, if yes color with elflord
 " color. You can choice your colorscheme in vi with TAB key
-" I use «solarized». 
+" I use Â« Solarized Â»
 " You can find them at http://ethanschoonover.com/solarized/vim-colors-solarized
 syntax on
-"colorscheme solarized
+set background=light
+colorscheme solarized
+set backspace=indent,eol,start
+                  " allow backspacing over everything in insert mode
 " Max number of tabs when I open vim with -p option
 set tabpagemax=25
 " When vim start or open a file, it go to the dir who contain the file
@@ -57,97 +85,119 @@ set laststatus=2
 set statusline=%a\ %F%1*%m%*%10{getfsize(expand('%'))}o%10l/%L(%2c)
 highlight StatusLine term=bold cterm=bold ctermbg=9
 " I wan autocomplet like bash
+set wildmenu
 set wildmode=longest,list
+" vim hide buffers instead of close them then I can close file without saving
+set hidden
+" remember more commands, more search history and more undo
+set history=100
+set undolevels=100
+set undofile
+set undodir=~/.vim/undo
+set noswapfile
+set wildignore=*.swp,*.bak,*.class
+"
+"
+"
+"
 
-" I learn vim, I map some extension file with file syntax
-au BufRead,BufNewFile *.inc set filetype=asm
-au BufRead,BufNewFile *.i set filetype=html
-au BufRead,BufNewFile *.src set filetype=html
-au BufRead,BufNewFile *.as set filetype=java 	"Action script syntax close to Java syntax ;-) 
-
-au FileType *.java set    dictionary+=$VIMRUNTIME/dict/java.dic complete+=k
 
 "
-" Some abbreviations
+"
+" Dictionary
+set spelllang=fr
+set spell 
+
+
+
+"
+"
+" leader key
+"
+" vim dedicate a complete keyboard for user specific customization
+" change the mapleader from \ to ,
+let mapleader=","
+" toggle paste because long paste indent lines lazzy
+nnoremap <leader>tp :set paste!<cr>
+" something like folding
+nnoremap <leader>ft Vatzf
+" toggle search highlight with space bar
+nnoremap <leader><space> :set hlsearch!<cr>
+" switch / toggle dictionary 
+nnoremap <leader>ts :set spell!<cr>
+nnoremap <leader>sfr :set spelllang=fr<cr>
+nnoremap <leader>sen :set spelllang=en<cr>
+" re-hardwrap paragraph of text (thank again Losh)
+nnoremap <leader>q gqip
+" split window (new or same) and go to left split or right split
+nnoremap <leader>sn :vne<cr>
+nnoremap <leader>s :vsp<cr>
+nnoremap <leader>sl <C-w>l
+nnoremap <leader>sr <C-w>r
+
+"
+"
+" end leader
+
+
+" Jump to matching pairs easily, with Tab
+nnoremap <Tab> %
+vnoremap <Tab> %
+
+
+"
+"
+" NERDTree settings {{{
+nnoremap <leader>n :NERDTreeFocus<CR>
+"nnoremap <leader>m :NERDTreeClose<CR>:NERDTreeFind<CR>
+"nnoremap <leader>N :NERDTreeClose<CR>
+
+" Store the bookmarks file
+let NERDTreeBookmarksFile=expand("$HOME/.vim/nerdtree/bm")
+
+" Show the bookmarks table on startup
+let NERDTreeShowBookmarks=1
+
+" Show hidden files, too
+"let NERDTreeShowFiles=1
+"let NERDTreeShowHidden=1
+
+" Quit on opening files from the tree
+"let NERDTreeQuitOnOpen=1
+
+" Highlight the selected entry in the tree
+let NERDTreeHighlightCursorline=1
+
+" Use a single click to fold/unfold directories and a double click to open
+" files
+let NERDTreeMouseMode=2
+
+" Don't display these kinds of files
+"let NERDTreeIgnore=[ '\.pyc$', '\.pyo$', '\.py\$class$', '\.obj$',
+"            \ '\.o$', '\.so$', '\.egg$', '^\.git$' ]
+
+" }}}
+"
+" TODO Comprendre le fonctionnement des boockmarks
+"
+
+
+"TODO
+"au FileType *.java set dictionary+=$VIMRUNTIME/dict/java.dic complete+=k
+
+" save on focus lost (when I change tab by example)
+" TODO don't work
+au FocusLost * :wa
+
+
+
+"
+"
+"
+" Some abbreviations or misspellings
 " Synopsis: abbr key value
 "
 " Remember. A good abreviation has a key which is NOT a common word ^^
-
-" Some time my fingers failed
-abbr itme item
-abbr foonote footnote
-abbr retrun return
-abbr rigth right
-abbr varaible variable
-abbr vpsace vspace
-
-" Java abbreviations
-" To the end of the line you find some chars for well positionning the cursor
-" (try with and without) 
-abbr sout System.out.println("");<esc>hhha  
-abbr serr System.err.println("");<esc>hhha   
-abbr souf System.out.printf("");<esc>hhha  
-abbr pr private
-abbr st static
-abbr _scanner import java.util.Scanner ; <cr>
-abbr _class public class <esc>:r!echo %:r<cr><up>A<del><end> { <cr>
-abbr _main public static void main ( String[] args ) { <cr>
-abbr _clavier Scanner clavier = new Scanner ( System.in ) ; 
-abbr _entete /** <cr> <esc>:r!echo %:r<cr><up>A<del><end> <cr><cr>@author PbT<cr>@since <esc>:r!date +"\%d \%B \%Y" <esc>i<bs><end><cr>/<cr><esc>kkkkko
+source ~/.vim/abbreviations.vim
 
 
-
-" LaTeX abbreviations
-" If you don't care, cut it.
-abbr s{ 		\section{
-abbr ss{  	\subsection{
-abbr sss{ 	\subsubsection{
-abbr bf{		\textbf{
-abbr it{ 	\textit{<esc>la
-abbr tt{ 	\texttt{
-abbr sc{ 	\textsc{
-abbr \i 		\item
-" When I write text; I like to write english terms in italic.
-abbr threadI \textit{thread} 
-abbr mutexI \textit{mutex}
-
-" I don't speak good English. I like to say it when I speak on a forum or by
-" mail. (Yes I write mail with vim)
-abbr _E (English is not my native langage)
-
-"Web
-abbr _IDE <abbr title="Integrated Development Environment">IDE</abbr>
-abbr _CARE <abbr title="Cellule d'Aide à la réussite">CARe</abbr>
-abbr _pbt <abbr title="Pierre BETTENS">pbt</abbr>
-abbr _mcd <abbr title="Marco CODUTTI">pbt</abbr>
-abbr _dwi <abbr title="Didier WILLAME">dwi</abbr>
-abbr _mwi <abbr title="Michel WILLEMSE">mwi</abbr>
-
-" Just for "fun" or exercice me
-iab ladate <C-R>=strftime("%A %d %B %Y")<CR>
-iab lheure <C-R>=strftime("%H:%M")<CR>
-
-
-
-"
-" Other commands
-"
-
-" Comment (visual bloc)
-" Highlight a bloc and press ;c or ;j. The bloc is commented
-vmap ;c <ESC>`<i/*<cr><ESC>`>a<cr>*/<ESC>
-vmap ;j <ESC>`<i/**<cr><ESC>`>a<cr>*/<ESC>
-
-
-" LaTeX commands
-com L w|!latex % 				
-com V !xdvi %:r & 		
-com Pdf w|!pdflatex % 	
-com Xpdf !xpdf %:r.pdf & 	
-
-" print file
-com A2ps w|!a2ps % &					
-
-" Last abbreviation
-" Automaticaly close '{' by '} // end <name>'
-iab }// } // end - <esc>10h%$?\w\+\s*(<cr>"xy/\s*(<cr>/{<cr>:nohl<cr>%$"xpa 
