@@ -134,6 +134,9 @@ nnoremap <leader>sn :vne<cr>
 nnoremap <leader>s :vsp<cr>
 nnoremap <leader>sl <C-w>l
 nnoremap <leader>sr <C-w>r
+" When I write text in markdown I like pandoc a PDF to see what Iw rite
+nnoremap <leader>z :!pandoc -o out.pdf %<cr>
+nnoremap <leader>zo :!zathura out.pdf &<cr>
 
 "
 "
@@ -148,9 +151,14 @@ vnoremap <Tab> %
 "
 "
 " NERDTree settings {{{
+autocmd vimenter * NERDTree
+" close vim if nerdtree is the last
+autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
+
 nnoremap <leader>n :NERDTreeFocus<CR>
 "nnoremap <leader>m :NERDTreeClose<CR>:NERDTreeFind<CR>
 "nnoremap <leader>N :NERDTreeClose<CR>
+nnoremap <leader>N :NERDTreeToggle<cr>
 
 " Store the bookmarks file
 let NERDTreeBookmarksFile=expand("$HOME/.vim/nerdtree/bm")
