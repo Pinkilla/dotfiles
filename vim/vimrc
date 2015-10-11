@@ -19,7 +19,9 @@
 " last revision: 	10 october 2012 (Add solarized colorscheme)
 "					28 february 2014 (I begin reading Steve Losh post)
 "					15 march 2014 (After read Steve Losh post)
-"
+"					28 augustus 2014 
+"						Adding color for background like solarized when I use 
+"						VimRoom https://mikewest.github.io/vimroom/
 "
 
 
@@ -27,7 +29,11 @@
 filetype off
 call pathogen#helptags()
 call pathogen#runtime_append_all_bundles()
-filetype plugin indent on
+filetype plugin on
+filetype indent on
+" for vim-latex
+set grepprg=grep\ -nH\ $*
+let g:tex_flavor='latex'
 
 
 " 
@@ -51,7 +57,7 @@ set shiftround " use multiple of shiftwidth when indenting with '<' and '>'
 " When lines are too long, wrap it for no horizontal scrolling. Don't cut line
 " automatically execpt with `gq`
 set wrap 
-set textwidth=80
+set textwidth=78
 set colorcolumn=82
 set formatoptions=qrn1j
 " Set visual bell, ie turn off the beep sounds and replace it by flash screen
@@ -72,8 +78,15 @@ set gdefault
 " I use « Solarized »
 " You can find them at http://ethanschoonover.com/solarized/vim-colors-solarized
 syntax on
-set background=light
-colorscheme solarized
+colorscheme desert
+let g:vimroom_ctermbackground = "black" 
+if has("gui_running")
+	set background=light
+	colorscheme solarized
+	set guifont=Liberation\ Mono\ 14
+	" I use plugin VimRoom and I set background like solarized 
+	let g:vimroom_guibackground = "#fdf6e3" 
+endif
 set backspace=indent,eol,start
                   " allow backspacing over everything in insert mode
 " Max number of tabs when I open vim with -p option
@@ -97,6 +110,8 @@ set undodir=~/.vim/undo
 set noswapfile
 set wildignore=*.swp,*.bak,*.class
 "
+" set encryption method to blowfish2 when I use -x (or :X) for encryption
+setlocal cm=blowfish2
 "
 "
 "
@@ -106,7 +121,7 @@ set wildignore=*.swp,*.bak,*.class
 "
 " Dictionary
 set spelllang=fr
-set spell 
+"set spell 
 
 
 
@@ -135,8 +150,10 @@ nnoremap <leader>s :vsp<cr>
 nnoremap <leader>sl <C-w>l
 nnoremap <leader>sr <C-w>r
 " When I write text in markdown I like pandoc a PDF to see what Iw rite
-nnoremap <leader>z :!pandoc -o out.pdf %<cr>
-nnoremap <leader>zo :!zathura out.pdf &<cr>
+nnoremap <leader>z :!pandoc % -o %.pdf --variable geometry:margin=3cm<cr>
+nnoremap <leader>zo :!zathura %.pdf &<cr>
+" Filetype fail on markdown file :-( 
+nnoremap <leader>sm :set syntax=markdown<cr>
 
 "
 "
@@ -151,7 +168,7 @@ vnoremap <Tab> %
 "
 "
 " NERDTree settings {{{
-autocmd vimenter * NERDTree
+"autocmd vimenter * NERDTree
 " close vim if nerdtree is the last
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
 
