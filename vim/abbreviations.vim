@@ -23,8 +23,8 @@ abbr pr private
 abbr st static
 abbr _scanner import java.util.Scanner ; <cr>
 abbr _class public class <esc>:r!echo %:r<cr><up>A<del><end> { <cr>
-abbr _main public static void main ( String[] args ) { <cr>
-abbr _clavier Scanner clavier = new Scanner ( System.in ) ; 
+abbr _main public static void main (String[] args) { <cr>
+abbr _clavier Scanner keyboard = new Scanner (System.in); 
 abbr _entete /** <cr> <esc>:r!echo %:r<cr><up>A<del><end> <cr><cr>@author PbT<cr>@since <esc>:r!date +"\%d \%B \%Y" <esc>i<bs><end><cr>/<cr><esc>kkkkko
 
 
@@ -32,7 +32,7 @@ abbr _entete /** <cr> <esc>:r!echo %:r<cr><up>A<del><end> <cr><cr>@author PbT<cr
 " 
 " I don't speak good English. I like to say it when I speak on a forum or by
 " mail.
-abbr _E (English is not my native langage)
+abbr _E (English is not my native language)
 
 
 " Just for "fun" or exercice me

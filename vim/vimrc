@@ -22,6 +22,10 @@
 "					28 augustus 2014 
 "						Adding color for background like solarized when I use 
 "						VimRoom https://mikewest.github.io/vimroom/
+"					23 october 2017
+"						Adding surround.vim plugin 
+"						https://vimawesome.com/plugin/surround-vim
+"						command is cs
 "
 
 
@@ -150,7 +154,7 @@ nnoremap <leader>s :vsp<cr>
 nnoremap <leader>sl <C-w>l
 nnoremap <leader>sr <C-w>r
 " When I write text in markdown I like pandoc a PDF to see what Iw rite
-nnoremap <leader>z :!pandoc % -o %.pdf --variable geometry:margin=3cm<cr>
+nnoremap <leader>z :!pandoc --highlight-style=tango % -o %.pdf <cr>
 nnoremap <leader>zo :!zathura %.pdf &<cr>
 " Filetype fail on markdown file :-( 
 nnoremap <leader>sm :set syntax=markdown<cr>

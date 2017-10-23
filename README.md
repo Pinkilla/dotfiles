@@ -21,8 +21,9 @@ See [Steve Losh post][slp] and my post on [Howto vim][notespit-vim].
 * [Steve Losh post][slp]
 * *vim* plugins; [Pathogen][pathogen], [NERDTree][nerdtree]
 * [notes·de·pit Howto vim][notespit-vim]
+* Plugin [surround][]
 
-[![CC-BY](cc-by.png)][licence]
+[![CC-BY](cc-by.pncc-by.pngg)][licence]
 
 
 [slp]: http://stevelosh.com/blog/2010/09/coming-home-to-vim
@@ -30,4 +31,5 @@ See [Steve Losh post][slp] and my post on [Howto vim][notespit-vim].
 [pathogen]:http://github.com/tpope/vim-pathogen
 [notespit-vim]:http://namok.be/blog/?post/2014/03/14/howto-vim
 [licence]:http://creativecommons.org/licenses/by/4.0/
+[surround]:https://vimawesome.com/plugin/surround-vim
 
