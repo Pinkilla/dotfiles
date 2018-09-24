@@ -22,7 +22,9 @@ abbr souf System.out.printf("");<esc>hhha
 abbr pr private
 abbr st static
 abbr _scanner import java.util.Scanner ; <cr>
-abbr _class public class <esc>:r!echo %:r<cr><up>A<del><end> { <cr>
+" abbr _class public class <esc>:r!echo %:r<cr><up>A<del><end> { <cr>
+" Better abbr from student in 2017 adapted
+abbr _class /** <cr><cr>@author Pierre Bettens (pbt)<cr>/<cr>public class <esc>:r!echo %:r<cr><up>A<del><end> {<cr><cr>}<up><bs><tab><cr>
 abbr _main public static void main (String[] args) { <cr>
 abbr _clavier Scanner keyboard = new Scanner (System.in); 
 abbr _entete /** <cr> <esc>:r!echo %:r<cr><up>A<del><end> <cr><cr>@author PbT<cr>@since <esc>:r!date +"\%d \%B \%Y" <esc>i<bs><end><cr>/<cr><esc>kkkkko

@@ -38,6 +38,8 @@ filetype indent on
 " for vim-latex
 set grepprg=grep\ -nH\ $*
 let g:tex_flavor='latex'
+" for grammalecte
+let g:grammalecte_cli_py='/opt/grammalecte/grammalecte-cli.py'
 
 
 " 
@@ -61,7 +63,7 @@ set shiftround " use multiple of shiftwidth when indenting with '<' and '>'
 " When lines are too long, wrap it for no horizontal scrolling. Don't cut line
 " automatically execpt with `gq`
 set wrap 
-set textwidth=78
+set textwidth=80
 set colorcolumn=82
 set formatoptions=qrn1j
 " Set visual bell, ie turn off the beep sounds and replace it by flash screen
@@ -154,10 +156,13 @@ nnoremap <leader>s :vsp<cr>
 nnoremap <leader>sl <C-w>l
 nnoremap <leader>sr <C-w>r
 " When I write text in markdown I like pandoc a PDF to see what Iw rite
-nnoremap <leader>z :!pandoc --highlight-style=tango % -o %.pdf <cr>
+nnoremap <leader>z :!pandoc --highlight-style=tango --latex-engine=xelatex % -o %.pdf <cr>
 nnoremap <leader>zo :!zathura %.pdf &<cr>
 " Filetype fail on markdown file :-( 
 nnoremap <leader>sm :set syntax=markdown<cr>
+" grammalecte
+nnoremap <leader>gl :GrammalecteCheck<cr>
+nnoremap <leader>gc :GrammalecteClear<cr> 
 
 "
 "
