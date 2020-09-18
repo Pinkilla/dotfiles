@@ -1,7 +1,3 @@
-# ~/.bashrc: executed by bash(1) for non-login shells.
-# see /usr/share/doc/bash/examples/startup-files (in the package bash-doc)
-# for examples
-#
 # my bashrc Pit
 
 # If running interactively, then:
@@ -23,11 +19,24 @@ if [ "$PS1" ]; then
 	 #my aliases
 	 alias df='df -h '
 	 alias du='du -h '
+	 alias givm='gvim '
+
 
     # set a fancy prompt
     #PS1='\u@\h:\w\$ '
-	PS1="\[\e[0;37m\]\u@\h\[\e[0m\]:$(if test $(echo $PWD | sed "s,$HOME,~," |wc -c) -gt 20; then echo "...${PWD: -20}"; else echo "\w"; fi)\[\e[0;32m\]$\[\e[0m\] "
-
+	#PS1="\[\e[0;37m\]\u@\h\[\e[0m\]:\w\[\e[0;32m\]$\[\e[0m\] "
+	split_pwd(){
+  		W=$(pwd | sed 's|'"$HOME"'|~|')
+		if [ $(echo $W | wc -c) -gt 30 ]; then
+		    echo $W | awk -F '/' '\
+		    	$3!=$(NF-1) {print $1 "/" $2 "/…/" $(NF-1) "/" $NF}\
+		    	$3==$(NF-1) {print $0}\
+		    '
+		else
+			echo $W;
+		fi
+	}
+	PS1="\[\e[0;37m\]\u@\h\[\e[0m\]:\$(split_pwd)\[\e[0;32m\]$\[\e[0m\] "
 
     # enable programmable completion features (you don't need to enable
     # this, if it's already enabled in /etc/bash.bashrc).
@@ -36,47 +45,22 @@ if [ "$PS1" ]; then
     fi
 fi
 
-# Corrections petites fautes 
+# Corrections for small errors 
 shopt -s cdspell 
 
 #java
-export PATH=/usr/local/java/jdk/bin:$PATH
-	PATH=$PATH:/usr/local//java/UMLGraph-5.6/bin/
+export PATH=~/bin:/usr/local/java/jdk/bin:$PATH
 export CLASSPATH=.:/usr/local/java/jdk:~/home/java
-	CLASSPATH=$CLASSPATH:/usr/local/java/mysql-connector-java.jar
-	CLASSPATH=$CLASSPATH:/usr/local/java/junit/junit-4.3.jar
-	CLASSPATH=$CLASSPATH:/usr/local/java/javamail/mail.jar
-	CLASSPATH=$CLASSPATH:/usr/local/java/javamail/lib/smtp.jar
-	CLASSPATH=$CLASSPATH:/usr/local/java/jaf/activation.jar
-	CLASSPATH=$CLASSPATH:/usr/local/java/jargs/classes
-	CLASSPATH=$CLASSPATH:/usr/local/java/jlayer/jl1.0.jar
-	CLASSPATH=$CLASSPATH:/usr/share/java
-	CLASSPATH=$CLASSPATH:/usr/local/java/UMLGraph-5.6/lib/UmlGraph.jar
 	CLASSPATH=$CLASSPATH:/usr/local/java/jdk/lib/tools.jar
-	CLASSPATH=$CLASSPATH:/home/pit/home/java/projet/tournament-pbt/resources/itextpdf-5.3.5.jar
-
 
 #C
 export CC=gcc
 
-#ActionScript
-#export PATH=$PATH:/usr/local/share/mtasc
-
-
-# Ant
-export PATH=$PATH:/usr/local/java/ant/bin
-export ANT_HOME=/usr/local/java/ant/
-export JAVA_HOME=/usr/local/java/jdk
-
-# Pour BOUML
-export BOUML_ID=42 
-
 # éditor and pager
 export EDITOR=vim
-#export BROWSER=/usr/local/share/firefox/firefox
 export BROWSER=/usr/bin/firefox-my
-# Configuration de less avec couleurs
-export LESS='-F -i -J -m -R -W -n4 -z-6'
+# configure less with colors
+export LESS='-F -X -i -J -m -R -W -n -x4 -z-6'
 export LESS_TERMCAP_mb=$'\E[1;31m'     # begin bold
 export LESS_TERMCAP_md=$'\E[1;36m'     # begin blink
 export LESS_TERMCAP_me=$'\E[0m'        # reset bold/blink
@@ -151,3 +135,8 @@ fi
 # Remettre ce damné beep à 0 de temps en temps
 xset b off
 
+
+# Set titel for terminal
+function set_title {
+	echo -n -e "\033]0;$1\007"
+}
