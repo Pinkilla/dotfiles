@@ -63,7 +63,7 @@ set shiftround " use multiple of shiftwidth when indenting with '<' and '>'
 " When lines are too long, wrap it for no horizontal scrolling. Don't cut line
 " automatically execpt with `gq`
 set wrap 
-set textwidth=80
+"set textwidth=80
 set colorcolumn=82
 set formatoptions=qrn1j
 " Set visual bell, ie turn off the beep sounds and replace it by flash screen
@@ -84,7 +84,7 @@ set gdefault
 " I use « Solarized »
 " You can find them at http://ethanschoonover.com/solarized/vim-colors-solarized
 syntax on
-colorscheme desert
+colorscheme pablo
 let g:vimroom_ctermbackground = "black" 
 if has("gui_running")
 	set background=light
@@ -121,7 +121,11 @@ setlocal cm=blowfish2
 "
 "
 "
-
+" show trail, nbsp, tab
+" for unset list: set nolist
+set listchars=nbsp:~,tab:>-
+hi SpecialKey ctermfg=grey guifg=grey90
+set list
 
 "
 "
@@ -156,7 +160,8 @@ nnoremap <leader>s :vsp<cr>
 nnoremap <leader>sl <C-w>l
 nnoremap <leader>sr <C-w>r
 " When I write text in markdown I like pandoc a PDF to see what Iw rite
-nnoremap <leader>z :!pandoc --highlight-style=tango --latex-engine=xelatex % -o %.pdf <cr>
+nnoremap <leader>z :!pandoc --highlight-style=tango % -o %.pdf <cr>
+nnoremap <leader>ze :!pandoc --highlight-style=tango --latex-engine=xelatex % -o %.pdf <cr>
 nnoremap <leader>zo :!zathura %.pdf &<cr>
 " Filetype fail on markdown file :-( 
 nnoremap <leader>sm :set syntax=markdown<cr>
