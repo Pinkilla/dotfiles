@@ -14,6 +14,7 @@ if [ "$PS1" ]; then
     #eval `dircolors -b`
     alias ls='ls --color=auto -h '
     alias ll='ls --color -h -l'
+    alias la='ls --color -h -l -a'
     alias md='mkdir'
 
 	 #my aliases
@@ -140,3 +141,33 @@ xset b off
 function set_title {
 	echo -n -e "\033]0;$1\007"
 }
+
+
+
+
+# running jekyll as non-root and without sudo
+export GEM_HOME=${HOME}/.gems
+export PATH=${PATH}:${HOME}/.gems/bin
+
+
+alias disoff="export DISPLAY=:0.0"
+alias dison="export DISPLAY=:1"
+
+alias smallps="source ~/bin/smallps; clear"
+
+# fzf config
+source /usr/share/bash-completion/completions/fzf
+source /usr/share/doc/fzf/examples/key-bindings.bash 
+
+export FZF_DEFAULT_OPTS="--height 50% \
+	--multi \
+	--inline-info \
+	--preview '[[ \$(file --mime {}) =~ binary ]] \
+		&& echo {} is a binary file \
+		|| bat --color=always --style=plain,changes {} \
+		2>/dev/null | head -300 ' \
+	--preview-window='hidden' \
+	--bind='f2:toggle-preview,ctrl-a:select-all+accept'"
+
+export FZF_ALT_C_OPTS="--preview 'tree -C {} | head -100'"
+
